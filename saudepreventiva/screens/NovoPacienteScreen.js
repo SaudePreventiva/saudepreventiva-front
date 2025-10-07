@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TextInput, Button, Alert, ScrollView, StyleSheet } from "react-native";
 import { loadPatients, savePatients } from "../utils/storage";
+import { useTheme } from "../context/ThemeContext";
 
 export default function NovoPacienteScreen({ navigation }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [ub, setUb] = useState("");
+  const { dark } = useTheme();
 
   const onSave = async () => {
     if (!name.trim()) {
@@ -42,32 +36,35 @@ export default function NovoPacienteScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.subtitle}>Novo Paciente</Text>
+    <ScrollView style={[styles.container, { backgroundColor: dark ? "#121212" : "#fff" }]}>
+      <Text style={[styles.subtitle, { color: dark ? "#fff" : "#000" }]}>Novo Paciente</Text>
 
-      <Text>Nome</Text>
+      <Text style={{ color: dark ? "#fff" : "#000" }}>Nome</Text>
       <TextInput
         value={name}
         onChangeText={setName}
         placeholder="Nome completo"
-        style={styles.input}
+        placeholderTextColor={dark ? "#888" : "#999"}
+        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
       />
 
-      <Text>Idade</Text>
+      <Text style={{ color: dark ? "#fff" : "#000" }}>Idade</Text>
       <TextInput
         value={age}
         onChangeText={setAge}
         keyboardType="numeric"
         placeholder="Ex: 45"
-        style={styles.input}
+        placeholderTextColor={dark ? "#888" : "#999"}
+        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
       />
 
-      <Text>UB/Clínica</Text>
+      <Text style={{ color: dark ? "#fff" : "#000" }}>UB/Clínica</Text>
       <TextInput
         value={ub}
         onChangeText={setUb}
         placeholder="UBS Centro"
-        style={styles.input}
+        placeholderTextColor={dark ? "#888" : "#999"}
+        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
       />
 
       <Button title="Salvar" onPress={onSave} />
@@ -76,17 +73,17 @@ export default function NovoPacienteScreen({ navigation }) {
       </View>
 
       <View style={{ marginTop: 24 }}>
-        <Text style={{ fontWeight: "bold" }}>Pré-visualização</Text>
-        <Text>Nome: {name || "-"}</Text>
-        <Text>Idade: {age || "-"}</Text>
-        <Text>UB: {ub || "-"}</Text>
+        <Text style={{ fontWeight: "bold", color: dark ? "#fff" : "#000" }}>Pré-visualização</Text>
+        <Text style={{ color: dark ? "#fff" : "#000" }}>Nome: {name || "-"}</Text>
+        <Text style={{ color: dark ? "#fff" : "#000" }}>Idade: {age || "-"}</Text>
+        <Text style={{ color: dark ? "#fff" : "#000" }}>UB: {ub || "-"}</Text>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16 },
   subtitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
   input: { borderBottomWidth: 1, marginBottom: 12, padding: 4 },
 });

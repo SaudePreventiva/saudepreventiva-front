@@ -1,34 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, Switch, StyleSheet } from "react-native";
-import { loadPrefs, savePrefs } from "../utils/storage";
+import { useTheme } from "../context/ThemeContext";
 
 export default function ConfigScreen() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const prefs = await loadPrefs();
-      if (prefs?.darkMode) setDark(true);
-    })();
-  }, []);
-
-  const toggle = async (val) => {
-    setDark(val);
-    await savePrefs({ darkMode: val });
-  };
+  const { dark, toggleDark } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Configurações</Text>
+    <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#fff" }]}>
+      <Text style={[styles.subtitle, { color: dark ? "#fff" : "#000" }]}>Configurações</Text>
       <View style={{ flexDirection: "row", marginTop: 16, alignItems: "center" }}>
-        <Text style={{ marginRight: 8 }}>Modo escuro</Text>
-        <Switch value={dark} onValueChange={toggle} />
+        <Text style={{ marginRight: 8, color: dark ? "#fff" : "#000" }}>Modo escuro</Text>
+        <Switch value={dark} onValueChange={toggleDark} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16 },
   subtitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
 });

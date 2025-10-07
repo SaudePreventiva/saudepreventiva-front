@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Button, StyleSheet } from "react-native";
 import { loadPatients } from "../utils/storage";
+import { useTheme } from "../context/ThemeContext";
 
 export default function PacientesScreen({ navigation }) {
   const [patients, setPatients] = useState([]);
+  const { dark } = useTheme();
 
   useEffect(() => {
     const unsub = navigation.addListener("focus", async () => {
@@ -14,8 +16,8 @@ export default function PacientesScreen({ navigation }) {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Pacientes</Text>
+    <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#fff" }]}>
+      <Text style={[styles.subtitle, { color: dark ? "#fff" : "#000" }]}>Pacientes</Text>
       <FlatList
         data={patients}
         keyExtractor={(item) => item.id}
@@ -31,6 +33,6 @@ export default function PacientesScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16 },
   subtitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
 });
