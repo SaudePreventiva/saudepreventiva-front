@@ -9,7 +9,7 @@ export async function savePatients(patients) {
 
 export async function loadPatients() {
   const raw = await AsyncStorage.getItem(PATIENTS_KEY);
-  return raw ? JSON.parse(raw) : null;
+  return raw ? JSON.parse(raw) : [];
 }
 
 export async function savePrefs(prefs) {
@@ -18,5 +18,5 @@ export async function savePrefs(prefs) {
 
 export async function loadPrefs() {
   const raw = await AsyncStorage.getItem(PREFS_KEY);
-  return raw ? JSON.parse(raw) : null;
+  return raw ? JSON.parse(raw) : {};
 }
