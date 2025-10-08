@@ -1,30 +1,33 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { loadPrefs, savePrefs } from "../utils/storage";
+// context/ThemeContext.js
+import React, { createContext, useContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ThemeContext = createContext();
 
-export function ThemeProvider({ children }) {
+export const ThemeProvider = ({ children }) => {
   const [dark, setDark] = useState(false);
 
+  // carregar preferência salva
   useEffect(() => {
-    (async () => {
-      const prefs = await loadPrefs();
-      if (prefs?.darkMode) setDark(true);
-    })();
+    const loadTheme = async () => {
+      const saved = await AsyncStorage.getItem("theme");
+      if (saved !== null) {
+        setDark(saved === "dark");
+      }
+    };
+    loadTheme();
   }, []);
 
-  const toggleDark = async (val) => {
-    setDark(val);
-    await savePrefs({ darkMode: val });
-  };
+  // salvar quando mudar
+  useEffect(() => {
+    AsyncStorage.setItem("theme", dark ? "dark" : "light");
+  }, [dark]);
 
   return (
-    <ThemeContext.Provider value={{ dark, toggleDark }}>
+    <ThemeContext.Provider value={{ dark, setDark }}>
       {children}
     </ThemeContext.Provider>
   );
-}
+};
 
-export function useTheme() {
-  return useContext(ThemeContext);
-}
+export const useTheme = () => useContext(ThemeContext);

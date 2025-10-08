@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { StatusBar } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import PacientesScreen from "./screens/PacientesScreen";
 import DetalheScreen from "./screens/DetalheScreen";
@@ -15,15 +15,31 @@ function AppNavigation() {
   const { dark } = useTheme();
 
   return (
-    <NavigationContainer theme={dark ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Início" }} />
-        <Stack.Screen name="Pacientes" component={PacientesScreen} />
-        <Stack.Screen name="Detalhe" component={DetalheScreen} />
-        <Stack.Screen name="NovoPaciente" component={NovoPacienteScreen} />
-        <Stack.Screen name="Config" component={ConfigScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider>
+      <StatusBar
+        barStyle={dark ? "light-content" : "dark-content"} // ícones brancos no dark, pretos no light
+        backgroundColor={dark ? "#121212" : "#f5f5f5"}    // cor de fundo
+      />
+      <NavigationContainer theme={dark ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: dark ? "#121212" : "#f5f5f5", // cor do header
+            },
+            headerTintColor: dark ? "#fff" : "#000", // cor dos ícones e título
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Início" }} />
+          <Stack.Screen name="Pacientes" component={PacientesScreen} />
+          <Stack.Screen name="Detalhe" component={DetalheScreen} />
+          <Stack.Screen name="NovoPaciente" component={NovoPacienteScreen} />
+          <Stack.Screen name="Config" component={ConfigScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

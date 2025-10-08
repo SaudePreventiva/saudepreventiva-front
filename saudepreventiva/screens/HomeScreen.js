@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { loadPatients } from "../utils/storage";
 import { useTheme } from "../context/ThemeContext";
 
@@ -15,29 +15,45 @@ export default function HomeScreen({ navigation }) {
     return unsub;
   }, [navigation]);
 
+  const accent = "#3b82f6";
+
   return (
-    <View style={[styles.center, { backgroundColor: dark ? "#121212" : "#fff" }]}>
-      <Text style={[styles.title, { color: dark ? "#fff" : "#000" }]}>SaudePreventiva</Text>
-      <Text style={{ color: dark ? "#ddd" : "#000" }}>
+    <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#f5f5f5" }]}>
+      <Text style={[styles.title, { color: dark ? "#fff" : "#000" }]}>SaúdePreventiva</Text>
+      <Text style={[styles.subtitle, { color: dark ? "#ccc" : "#555" }]}>
         Pacientes cadastrados: {count}
       </Text>
 
-      <Button title="Ver Pacientes" onPress={() => navigation.navigate("Pacientes")} />
-      <Button title="Novo Paciente" onPress={() => navigation.navigate("NovoPaciente")} />
-      <Button title="Configurações" onPress={() => navigation.navigate("Config")} />
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: accent }]}
+        onPress={() => navigation.navigate("Pacientes")}
+      >
+        <Text style={styles.buttonText}>📋 Ver Pacientes</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: accent }]}
+        onPress={() => navigation.navigate("NovoPaciente")}
+      >
+        <Text style={styles.buttonText}>➕ Novo Paciente</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: dark ? "#333" : "#ddd" }]}
+        onPress={() => navigation.navigate("Config")}
+      >
+        <Text style={[styles.buttonText, { color: dark ? "#fff" : "#000" }]}>
+          ⚙️ Configurações
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
+  title: { fontSize: 32, fontWeight: "bold", marginBottom: 12 },
+  subtitle: { fontSize: 16, marginBottom: 24 },
+  button: { width: "80%", padding: 14, borderRadius: 12, alignItems: "center", marginVertical: 6 },
+  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });

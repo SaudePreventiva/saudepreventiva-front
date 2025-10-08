@@ -1,89 +1,48 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert, ScrollView, StyleSheet } from "react-native";
-import { loadPatients, savePatients } from "../utils/storage";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { savePatient } from "../utils/storage";
 import { useTheme } from "../context/ThemeContext";
 
 export default function NovoPacienteScreen({ navigation }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [ub, setUb] = useState("");
+  const [condition, setCondition] = useState("");
   const { dark } = useTheme();
+  const accent = "#3b82f6";
 
-  const onSave = async () => {
-    if (!name.trim()) {
-      Alert.alert("Erro", "Nome é obrigatório");
-      return;
-    }
-    const pts = await loadPatients();
-    const newPatient = {
-      id: `p${Date.now()}`,
-      name,
-      age: Number(age),
-      ub,
-      lastExam: {},
-      alerts: [],
-    };
-    const updated = [newPatient, ...pts];
-    await savePatients(updated);
-    Alert.alert("Sucesso", "Paciente salvo!");
+  const handleSave = async () => {
+    if (!name.trim()) return;
+    await savePatient({ name, age, condition });
     navigation.goBack();
   };
 
-  const onClear = () => {
-    setName("");
-    setAge("");
-    setUb("");
-  };
+  const inputStyle = [
+    styles.input,
+    { backgroundColor: dark ? "#1e1e1e" : "#fff", color: dark ? "#fff" : "#000" },
+  ];
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: dark ? "#121212" : "#fff" }]}>
-      <Text style={[styles.subtitle, { color: dark ? "#fff" : "#000" }]}>Novo Paciente</Text>
+    <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#f5f5f5" }]}>
+      <TextInput style={inputStyle} placeholder="Nome" placeholderTextColor="#888" value={name} onChangeText={setName} />
+      <TextInput style={inputStyle} placeholder="Idade" placeholderTextColor="#888" value={age} onChangeText={setAge} keyboardType="numeric" />
+      <TextInput style={inputStyle} placeholder="Condição" placeholderTextColor="#888" value={condition} onChangeText={setCondition} />
 
-      <Text style={{ color: dark ? "#fff" : "#000" }}>Nome</Text>
-      <TextInput
-        value={name}
-        onChangeText={setName}
-        placeholder="Nome completo"
-        placeholderTextColor={dark ? "#888" : "#999"}
-        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
-      />
-
-      <Text style={{ color: dark ? "#fff" : "#000" }}>Idade</Text>
-      <TextInput
-        value={age}
-        onChangeText={setAge}
-        keyboardType="numeric"
-        placeholder="Ex: 45"
-        placeholderTextColor={dark ? "#888" : "#999"}
-        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
-      />
-
-      <Text style={{ color: dark ? "#fff" : "#000" }}>UB/Clínica</Text>
-      <TextInput
-        value={ub}
-        onChangeText={setUb}
-        placeholder="UBS Centro"
-        placeholderTextColor={dark ? "#888" : "#999"}
-        style={[styles.input, { color: dark ? "#fff" : "#000", borderBottomColor: dark ? "#888" : "#000" }]}
-      />
-
-      <Button title="Salvar" onPress={onSave} />
-      <View style={{ marginTop: 8 }}>
-        <Button title="Limpar" onPress={onClear} />
-      </View>
-
-      <View style={{ marginTop: 24 }}>
-        <Text style={{ fontWeight: "bold", color: dark ? "#fff" : "#000" }}>Pré-visualização</Text>
-        <Text style={{ color: dark ? "#fff" : "#000" }}>Nome: {name || "-"}</Text>
-        <Text style={{ color: dark ? "#fff" : "#000" }}>Idade: {age || "-"}</Text>
-        <Text style={{ color: dark ? "#fff" : "#000" }}>UB: {ub || "-"}</Text>
-      </View>
-    </ScrollView>
+      <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleSave}>
+        <Text style={styles.buttonText}>Salvar</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  subtitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
-  input: { borderBottomWidth: 1, marginBottom: 12, padding: 4 },
+  input: {
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  button: { padding: 14, borderRadius: 12, alignItems: "center" },
+  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });
