@@ -23,9 +23,28 @@ export default function NovoPacienteScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#f5f5f5" }]}>
-      <TextInput style={inputStyle} placeholder="Nome" placeholderTextColor="#888" value={name} onChangeText={setName} />
-      <TextInput style={inputStyle} placeholder="Idade" placeholderTextColor="#888" value={age} onChangeText={setAge} keyboardType="numeric" />
-      <TextInput style={inputStyle} placeholder="Condição" placeholderTextColor="#888" value={condition} onChangeText={setCondition} />
+      <TextInput
+        style={inputStyle}
+        placeholder="Nome"
+        placeholderTextColor="#888"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        style={inputStyle}
+        placeholder="Idade"
+        placeholderTextColor="#888"
+        value={age}
+        onChangeText={setAge}
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={inputStyle}
+        placeholder="Condição"
+        placeholderTextColor="#888"
+        value={condition}
+        onChangeText={setCondition}
+      />
 
       <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleSave}>
         <Text style={styles.buttonText}>Salvar</Text>

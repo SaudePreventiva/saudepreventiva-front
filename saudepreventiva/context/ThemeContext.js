@@ -10,9 +10,13 @@ export const ThemeProvider = ({ children }) => {
   // carregar preferência salva
   useEffect(() => {
     const loadTheme = async () => {
-      const saved = await AsyncStorage.getItem("theme");
-      if (saved !== null) {
-        setDark(saved === "dark");
+      try {
+        const saved = await AsyncStorage.getItem("theme");
+        if (saved !== null) {
+          setDark(saved === "dark");
+        }
+      } catch (e) {
+        console.log("Erro ao carregar tema:", e);
       }
     };
     loadTheme();

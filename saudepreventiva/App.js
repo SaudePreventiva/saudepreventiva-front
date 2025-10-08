@@ -15,21 +15,25 @@ function AppNavigation() {
   const { dark } = useTheme();
 
   return (
-    <ThemeProvider>
+    <>
+      {/* StatusBar acompanha o tema */}
       <StatusBar
-        barStyle={dark ? "light-content" : "dark-content"} // ícones brancos no dark, pretos no light
-        backgroundColor={dark ? "#121212" : "#f5f5f5"}    // cor de fundo
+        barStyle={dark ? "light-content" : "dark-content"}
+        backgroundColor={dark ? "#121212" : "#f5f5f5"}
       />
+
       <NavigationContainer theme={dark ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: dark ? "#121212" : "#f5f5f5", // cor do header
+              backgroundColor: dark ? "#121212" : "#f5f5f5",
             },
-            headerTintColor: dark ? "#fff" : "#000", // cor dos ícones e título
+            headerTintColor: dark ? "#fff" : "#000",
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerTransparent: false,   // força header sólido
+            headerShadowVisible: false, // remove sombra (opcional)
           }}
         >
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Início" }} />
@@ -39,7 +43,7 @@ function AppNavigation() {
           <Stack.Screen name="Config" component={ConfigScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-    </ThemeProvider>
+    </>
   );
 }
 

@@ -12,6 +12,12 @@ export async function loadPatients() {
   return raw ? JSON.parse(raw) : [];
 }
 
+export async function savePatient(patient) {
+  const patients = await loadPatients();
+  const updated = [...patients, patient];
+  await savePatients(updated);
+}
+
 export async function savePrefs(prefs) {
   await AsyncStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
 }
