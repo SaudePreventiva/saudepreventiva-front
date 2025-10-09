@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { loadPatients } from "../utils/storage";
 import { useTheme } from "../context/ThemeContext";
 
@@ -19,6 +19,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: dark ? "#121212" : "#f5f5f5" }]}>
+      
+      <Image
+        source={require("../assets/logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+
       <Text style={[styles.title, { color: dark ? "#fff" : "#000" }]}>SaúdePreventiva</Text>
       <Text style={[styles.subtitle, { color: dark ? "#ccc" : "#555" }]}>
         Pacientes cadastrados: {count}
@@ -52,6 +59,7 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
+  logo: { width: 250, height: 250, marginBottom: 16 }, // tamanho do ícone
   title: { fontSize: 32, fontWeight: "bold", marginBottom: 12 },
   subtitle: { fontSize: 16, marginBottom: 24 },
   button: { width: "80%", padding: 14, borderRadius: 12, alignItems: "center", marginVertical: 6 },

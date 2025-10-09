@@ -45,6 +45,7 @@ export default function NovoPacienteScreen({ navigation }) {
         value={condition}
         onChangeText={setCondition}
       />
+      
 
       <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleSave}>
         <Text style={styles.buttonText}>Salvar</Text>
