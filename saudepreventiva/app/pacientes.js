@@ -12,7 +12,7 @@ export default function PacientesScreen() {
   useEffect(() => {
     const fetch = async () => {
       const data = await loadPatients();
-      setPacientes(data);
+      setPacientes(data || []);
     };
     fetch();
   }, []);
@@ -37,26 +37,40 @@ export default function PacientesScreen() {
       </Text>
 
       {pacientes.length === 0 ? (
-        <Text style={{ color: dark ? "#aaa" : "#555" }}>Nenhum paciente cadastrado.</Text>
+        <Text style={{ color: dark ? "#aaa" : "#555" }}>
+          Nenhum paciente cadastrado.
+        </Text>
       ) : (
         <FlatList
           data={pacientes}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item, index }) => (
+          keyExtractor={(item) => item.id?.toString() ?? Math.random().toString()}
+          renderItem={({ item }) => (
             <TouchableOpacity
               style={{
                 backgroundColor: dark ? "#1e1e1e" : "#fff",
                 padding: 15,
                 borderRadius: 10,
                 marginBottom: 10,
+                shadowColor: "#000",
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
                 elevation: 2,
               }}
-              onPress={() => router.push(`/paciente/${index}`)}
+              // 🔹 Agora passando o ID real do paciente
+              onPress={() => router.push(`/paciente/${item.id}`)}
             >
-              <Text style={{ color: dark ? "#fff" : "#000", fontSize: 18, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  color: dark ? "#fff" : "#000",
+                  fontSize: 18,
+                  fontWeight: "bold",
+                }}
+              >
                 {item.name}
               </Text>
-              <Text style={{ color: dark ? "#ccc" : "#444" }}>{item.age} anos</Text>
+              <Text style={{ color: dark ? "#ccc" : "#444" }}>
+                {item.age} anos
+              </Text>
             </TouchableOpacity>
           )}
         />
