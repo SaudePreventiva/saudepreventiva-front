@@ -1,91 +1,105 @@
-# 📱 SaúdePreventiva - Protótipo Mobile
+# 📱 Saúde Preventiva
 
-Aplicativo desenvolvido em React Native com Expo como parte do desafio de Mobile App Development.
-O app simula uma plataforma de saúde preventiva, permitindo cadastrar e visualizar pacientes, com armazenamento local e navegação entre telas.
-
----
-
-## 📌 Funcionalidades
-
-* 🧭 Navegação entre telas usando React Navigation (Stack Navigator).
-* 📝 Formulário de cadastro de pacientes com campos controlados (useState).
-* 💾 Armazenamento local com AsyncStorage (dados persistem mesmo após fechar o app).
-* 🎨 Tema claro/escuro com Context API.
-* 👤 Listagem de pacientes cadastrados com tela de detalhes.
-* ⚙️ Tela de Configurações (simulação de preferências do usuário).
+Aplicativo desenvolvido em **React Native** com **Expo**, como parte de um desafio de desenvolvimento mobile.  
+O app simula uma plataforma de **saúde preventiva**, permitindo o **cadastro e visualização de pacientes**, com **armazenamento local** e suporte a **tema claro/escuro**.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Funcionalidades
 
-* React Native
-* Expo
-* React Navigation
-* AsyncStorage
+- 🧭 **Navegação entre telas** usando `expo-router`
+- 📝 **Cadastro de pacientes** com:
+  - Nome
+  - Idade
+  - CPF
+  - Gênero (masculino/feminino)
+- 👀 **Visualização de detalhes** do paciente
+- 💾 **Armazenamento local** usando `AsyncStorage`
+- 🌙 **Tema claro e escuro** com `Context API`
+- 🎨 **Cabeçalho personalizado** com logotipo e nome do app
 
 ---
 
-## 📂 Estrutura do Projeto
+## 🧩 Estrutura do Projeto
 
 ```
-/screens
-├── HomeScreen.js
-├── PacientesScreen.js
-├── NovoPacienteScreen.js
-├── DetalheScreen.js
-└── ConfigScreen.js
-
-/utils
-└── storage.js  # funções de salvar/carregar pacientes
-
-/context
-└── ThemeContext.js  # gerencia tema claro/escuro
+SaudePreventiva/
+│
+├── app/
+│   ├── index.js              # Tela inicial (Home)
+│   ├── pacientes.js          # Listagem de pacientes
+│   ├── novo-paciente.js      # Cadastro de novo paciente
+│   ├── paciente/[id].js      # Detalhes do paciente
+│   ├── config.js             # Configuração de tema 
+|   └── _layout.js            # Configuração de header e theme provider
+|
+├── assets/
+│   ├── logo.png              # Ícone usado no header
+│   ├── male.png              # Ícone masculino
+│   └── female.png            # Ícone feminino  
+|
+├── context/
+│   └── ThemeContext.js       # Contexto de tema (claro/escuro)
+│
+├── utils/
+│   └── storage.js            # Funções para salvar/carregar pacientes
+│
+├── app.json                  # Configuração do Expo
+├── package.json              # Dependências do projeto
+└── README.md
 ```
 
 ---
 
-## 🚀 Executando o Projeto
+## ⚙️ Instalação e Execução
 
-1. Clonar o repositório
-
+### 1. Clonar o repositório
 ```bash
-git clone https://github.com/SEU-USUARIO/saude-preventiva.git
-cd saude-preventiva
+git clone https://github.com/juanxto/SaudePreventiva.git
+cd SaudePreventiva
 ```
 
-2. Instalar dependências
-
+### 2. Instalar dependências
 ```bash
 npm install
+# ou
+yarn install
 ```
 
-3. Rodar com Expo
-
+### 3. Rodar o app
 ```bash
 npx expo start
 ```
 
-* Escaneie o QR Code no terminal com o Expo Go (Android/iOS).
-* Ou rode no emulador Android/iOS.
+O Expo abrirá um QR Code no terminal ou no navegador. Você pode testar no **Expo Go** (Android/iOS) ou em um emulador.
 
 ---
 
-## 🎯 Como usar
+## 💡 Tecnologias Utilizadas
 
-1. Abra o app e veja a tela inicial com o número de pacientes cadastrados.
-2. Clique em ➕ **Novo Paciente** para cadastrar nome, idade e condição de saúde.
-3. Os pacientes aparecem listados em 📋 **Ver Pacientes**.
-4. Clique em um paciente para abrir a tela de detalhes.
-5. Vá em ⚙️ **Configurações** para simular preferências (tema escuro/claro).
+- React Native (Expo)
+- Expo Router
+- AsyncStorage
+- Context API
+- React Hooks
+- React Navigation (Stack)
+- Lucide Icons (ícones vetoriais)
+- Tailwind-like inline styles
 
 ---
 
-## 💡 Tema Acadêmico
+## 🌗 Tema Escuro/Claro
 
-Este protótipo representa a versão mobile da plataforma de saúde preventiva baseada em Oracle 23ai.
-Na Sprint atual, os dados de pacientes são salvos localmente.
-Em versões futuras, esses dados seriam integrados ao Oracle Database com IA embarcada, permitindo:
+O app detecta e alterna automaticamente entre os modos claro e escuro, afetando:
+- Fundo das telas
+- Cores de texto
+- Cores dos cartões e cabeçalhos
 
-* Alertas preventivos de doenças (ex: risco de diabetes, hipertensão).
-* Dashboards para médicos e gestores.
-* Consultas inteligentes em linguagem natural.
+---
+
+## 👩‍⚕️ Futuras Melhorias
+
+- 🧠 Filtros e pesquisa de pacientes
+- 📊 Estatísticas e relatórios
+- ☁️ Integração com backend (API REST)
+- 🔐 Autenticação de usuários

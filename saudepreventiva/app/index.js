@@ -17,7 +17,7 @@ export default function HomeScreen() {
       }}
     >
         <Image
-              source={require("../assets/logo.png")} // <- coloque seu ícone aqui
+              source={require("../assets/logo.png")} 
               style={{ width: 400, height: 400 }}
             />
       <Text

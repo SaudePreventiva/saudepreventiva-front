@@ -14,7 +14,6 @@ export default function DetalheScreen() {
       const pts = await loadPatients();
       if (!pts || pts.length === 0) return;
 
-      // 🔍 busca o paciente comparando como string
       const found = pts.find((p) => String(p.id) === String(id));
 
       if (found) setPatient(found);
@@ -36,11 +35,10 @@ export default function DetalheScreen() {
     );
   }
 
-  // 👇 Define ícone conforme gênero
   const genderIcon =
     patient.gender === "feminino"
-      ? require("../../assets/female.png") // 🧍‍♀️ ícone feminino
-      : require("../../assets/male.png"); // 🧍‍♂️ ícone masculino
+      ? require("../../assets/female.png") 
+      : require("../../assets/male.png"); 
 
   return (
     <View
@@ -55,7 +53,7 @@ export default function DetalheScreen() {
           { backgroundColor: dark ? "#1e1e1e" : "#fff" },
         ]}
       >
-        {/* Ícone de gênero */}
+        
         <View style={styles.iconContainer}>
           <Image source={genderIcon} style={styles.genderIcon} />
         </View>

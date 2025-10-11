@@ -8,7 +8,7 @@ function HeaderTitle() {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
       <Image
-        source={require("../assets/logo.png")} // 👈 coloque seu ícone aqui
+        source={require("../assets/logo.png")} 
         style={{ width: 32, height: 32, resizeMode: "contain" }}
       />
       <Text
@@ -24,7 +24,6 @@ function HeaderTitle() {
   );
 }
 
-// 🔥 Componente separado pra poder usar o hook `useTheme()`
 function ThemedStack() {
   const { dark } = useTheme();
 

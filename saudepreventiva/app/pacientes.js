@@ -56,7 +56,7 @@ export default function PacientesScreen() {
                 shadowRadius: 4,
                 elevation: 2,
               }}
-              // 🔹 Agora passando o ID real do paciente
+
               onPress={() => router.push(`/paciente/${item.id}`)}
             >
               <Text
