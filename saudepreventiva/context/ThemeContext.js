@@ -1,37 +1,22 @@
-// context/ThemeContext.js
-import React, { createContext, useContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useContext, useState } from "react";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [dark, setDark] = useState(false);
-
-  // carregar preferência salva
-  useEffect(() => {
-    const loadTheme = async () => {
-      try {
-        const saved = await AsyncStorage.getItem("theme");
-        if (saved !== null) {
-          setDark(saved === "dark");
-        }
-      } catch (e) {
-        console.log("Erro ao carregar tema:", e);
-      }
-    };
-    loadTheme();
-  }, []);
-
-  // salvar quando mudar
-  useEffect(() => {
-    AsyncStorage.setItem("theme", dark ? "dark" : "light");
-  }, [dark]);
+  const toggleTheme = () => setDark((prev) => !prev);
 
   return (
-    <ThemeContext.Provider value={{ dark, setDark }}>
+    <ThemeContext.Provider value={{ dark, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme deve ser usado dentro de um ThemeProvider");
+  }
+  return context;
+};
